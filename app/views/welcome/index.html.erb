@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+
+  </title>
+
+  <style>
+
+    #footer
+    {
+
+    }
+
+
+
+
+    #main-content
+    {
+      border-left: 1px bold #ccc;
+    }
+
+    .jumbotron
+    {
+      background-image: url(image_path('header.jpg'));
+      text-align: center;
+      background-color: white;
+      border-bottom: 1px solid #ccc;
+    }
+    #gallery{
+      border: 1px solid #ccc;
+      height: 400px;
+    }
+    .thumbnail{
+      margin-top: 15px;
+      margin-bottom: 5px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+    .caption{
+      margin: 5px;
+      padding: 5px;
+    }
+
+    #descritpion{
+      color: #808080;
+      font-size: 12px;
+    }
+  </style>
+
+
+</head>
+
+
+<body>
+
+  <div class="jumbotron">
+      <div id="text">
+        <h1>Welcome To Properti</h1>
+        <p>Filling your life with great deal</p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+        <p style="float:right; font-size: 14px;"> Cari di peta <span class="glyphicon glyphicon-map-marker" aria-hidden="true"> </span></p>
+      </div>
+  </div>
+
+
+    <%if @properties.blank? %>
+      <div class="col-xs-12">
+      <div class="alert alert-danger" role="alert">
+        <p> There are no properties on the list </p>
+        <br>
+      </div>
+      </div>
+    <%end%>
+
+  <div id="main-container" class="container-fluid">
+    <div id="sidebar" class="col-xs-4">
+      <h3> Kota </h3>
+      <ul>
+        <li> <a href="#"> Jakarta </a> </li>
+        <li> <a href="#"> Medan </a> </li>
+        <li> <a href="#"> Surabaya </a> </li>
+        <li> <a href="#"> Tangerang </a> </li>
+        <li> <a href="#"> Bali </a> </li>
+      </ul>
+
+      <h3> Contact Us </h3>
+
+      <%= simple_form_for @contact do |f| %>
+          <%= f.input :name , :required => true%>
+          <%= f.input :email, :required => true %>
+          <%= f.input :message, :as=> :text , :required => false, :input_html => {:rows => 10}%>
+          <%= f.input :nickname, :hint => 'Leave this field blank!' %>
+          <%= f.button :submit, 'Send message', :class=> "btn btn-primary" %>
+        <% end %>
+     
+    </div>
+  
+
+
+
+  <div id="main-content" class="col-xs-8">
+   
+    <p id="notice"><%= notice %></p>
+
+    <h3> Listing Property </h3>
+    <% @properties.each do |property| %>
+      <div id = "gallery" class="col-xs-4">
+        <div class="thumbnail">
+            <%= link_to image_tag("rumah.jpg", width:"512", height:"128", alt: ""), property %> 
+        </div>
+        <div class="caption">
+          <h3><%= property.name %></h3>
+          <p id="descritpion"> <%= property.description %> </p>
+          <p id="houseprice">Harga: <%= number_to_currency property.price, unit: "Rp. " %>M</p>
+          <%= link_to 'Lihat', property %>
+        </div>
+      </div>
+
+    <%end%>
+    <br>
+  </div>
+
+  <div id="pagination">
+    <div class="col-xs-4">
+
+    </div>
+    <div class="col-xs-4">
+      <br>
+      
+        <%= button_to "Sort "%>
+      
+        <%= paginate @properties %>
+      
+    </div>
+  </div>
+    
+
+
+</div>
+
+  <br>
+  <br>
+
+  <div id="footer" class="col-xs-12">
+  <blockquote>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+      <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
+    </blockquote>
+  </div>
+</body>
+
+</html>
+
+
+
+
+
+<%= link_to 'New Property', new_property_path %>
+
